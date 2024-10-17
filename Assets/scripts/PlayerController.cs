@@ -37,10 +37,19 @@ public class PlayerController : MonoBehaviour
             if (targetRotation.y > 270f && targetRotation.y < 361f) targetRotation.y = 0f;
             if (targetRotation.y < 0f) targetRotation.y = 270f;
 
-           // if (!smoothTransition)
-           // {
+            if (!softTransition)
+            {
+                transform.position = targetPosition;
+                transform.rotation = Quaternion.Euler(targetRotation);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * transitionVelocity);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotationTransitionVelocity);
+            }
+            
 
-            //}
+
         }else{
 
             targetGridPos = prevTargetGridPos;
