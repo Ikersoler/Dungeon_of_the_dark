@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        if (Mathf.RoundToInt(targetGridPos.x)%2 == 0 || Mathf.RoundToInt(targetGridPos.z) %2  == 0)
+        if (true)//Mathf.RoundToInt(targetGridPos.x)%2 == 0 || Mathf.RoundToInt(targetGridPos.z) %2  == 0
         {
 
             prevTargetGridPos = targetGridPos;
