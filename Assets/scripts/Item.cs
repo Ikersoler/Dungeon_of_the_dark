@@ -2,20 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item 
+
+
+[CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item")]
+public class Item : ScriptableObject
 {
-    public enum ItemType
-    {
-        sword,
-        helmet,
-        armor,
-        pants,
-        healthPotion,
-        monsterPart,
-        key,
-
-    }
-
-    public ItemType itemType;
-    public int amount;
+    public string itemName;
+    public Sprite icon;
+    public bool isEquippable;
 }

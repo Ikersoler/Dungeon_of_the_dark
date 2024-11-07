@@ -7,9 +7,7 @@ public class PlayerController : MonoBehaviour
     public bool softTransition = false;
     public float transitionVelocity = 10f;
     public float rotationTransitionVelocity = 500f;
-
-
-
+    public float raycastDistance = 1f; // Distancia del raycast para detectar obstáculos
 
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
@@ -27,9 +25,8 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        if (true)//Mathf.RoundToInt(targetGridPos.x)%2 == 0 || Mathf.RoundToInt(targetGridPos.z) %2  == 0
+        if (true) // Mathf.RoundToInt(targetGridPos.x) % 2 == 0 || Mathf.RoundToInt(targetGridPos.z) % 2 == 0
         {
-
             prevTargetGridPos = targetGridPos;
 
             Vector3 targetPosition = targetGridPos;
@@ -47,38 +44,65 @@ public class PlayerController : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * transitionVelocity);
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotationTransitionVelocity);
             }
-            
-
-
-        }else{
-
+        }
+        else
+        {
             targetGridPos = prevTargetGridPos;
-
         }
     }
 
+    // Métodos de movimiento con detección de obstáculos usando raycast
     public void RotateLeft() { if (AtRest) targetRotation -= Vector3.up * 90f; }
     public void RotateRight() { if (AtRest) targetRotation += Vector3.up * 90f; }
-    public void MoveForeward() { if (AtRest) targetGridPos += transform.forward; }
-    public void MoveBack() { if (AtRest) targetGridPos -= transform.forward; }
-    public void MoveLeft() { if (AtRest) targetGridPos -= transform.right; }
-    public void MoveRight() { if (AtRest) targetGridPos += transform.right; }
 
+    public void MoveForward()
+    {
+        if (AtRest && !ObstacleInDirection(transform.forward))
+        {
+            targetGridPos += transform.forward;
+        }
+    }
 
+    public void MoveBack()
+    {
+        if (AtRest && !ObstacleInDirection(-transform.forward))
+        {
+            targetGridPos -= transform.forward;
+        }
+    }
 
+    public void MoveLeft()
+    {
+        if (AtRest && !ObstacleInDirection(-transform.right))
+        {
+            targetGridPos -= transform.right;
+        }
+    }
 
+    public void MoveRight()
+    {
+        if (AtRest && !ObstacleInDirection(transform.right))
+        {
+            targetGridPos += transform.right;
+        }
+    }
 
-
+    // Método que usa un Raycast para detectar obstáculos
+    bool ObstacleInDirection(Vector3 direction)
+    {
+        // Raycast en la dirección especificada desde la posición del objeto
+        return Physics.Raycast(transform.position, direction, raycastDistance);
+    }
 
     bool AtRest
     {
         get
         {
-            if((Vector3.Distance(transform.position, targetGridPos) < 0.05f) &&
-               (Vector3.Distance(transform.eulerAngles, targetRotation) < 0.05f))
-                return true;
-            else
-                return false;
+            return (Vector3.Distance(transform.position, targetGridPos) < 0.05f) &&
+                   (Vector3.Distance(transform.eulerAngles, targetRotation) < 0.05f);
         }
     }
+
+
+
 }

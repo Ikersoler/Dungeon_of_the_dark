@@ -23,7 +23,7 @@ public class PlayerImput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(forward)) controller.MoveForeward();
+        if (Input.GetKeyUp(forward)) controller.MoveForward();
         if (Input.GetKeyUp(back)) controller.MoveBack();
         if (Input.GetKeyUp(left)) controller.MoveLeft();
         if (Input.GetKeyUp(right)) controller.MoveRight();
