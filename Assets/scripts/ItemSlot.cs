@@ -15,7 +15,6 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         itemImage = GetComponentInChildren<Image>();
         itemImage.sprite = item.icon;
     }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (item != null)
@@ -24,18 +23,15 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             itemImage.raycastTarget = false;
         }
     }
-
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position;
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.localPosition = Vector3.zero;
         itemImage.raycastTarget = true;
     }
-
     public void OnDrop(PointerEventData eventData)
     {
         inventoryManager.OnItemDropped(this);

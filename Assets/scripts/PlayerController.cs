@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        if (true) // Mathf.RoundToInt(targetGridPos.x) % 2 == 0 || Mathf.RoundToInt(targetGridPos.z) % 2 == 0
+        if (true) 
         {
             prevTargetGridPos = targetGridPos;
 
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Métodos de movimiento con detección de obstáculos usando raycast
+    
     public void RotateLeft() { if (AtRest) targetRotation -= Vector3.up * 90f; }
     public void RotateRight() { if (AtRest) targetRotation += Vector3.up * 90f; }
 
@@ -87,10 +87,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Método que usa un Raycast para detectar obstáculos
     bool ObstacleInDirection(Vector3 direction)
     {
-        // Raycast en la dirección especificada desde la posición del objeto
         return Physics.Raycast(transform.position, direction, raycastDistance);
     }
 

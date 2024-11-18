@@ -11,7 +11,6 @@ public class InventoryManager : MonoBehaviour
 
     void Start()
     {
-        // Inicializar la UI de inventario vacía
         UpdateInventoryUI();
     }
 
@@ -29,13 +28,12 @@ public class InventoryManager : MonoBehaviour
 
     void UpdateInventoryUI()
     {
-        // Limpiar la UI de inventario actual
+        
         foreach (Transform child in inventoryUIParent)
         {
             Destroy(child.gameObject);
         }
 
-        // Crear un nuevo icono para cada ítem en el inventario
         foreach (var item in items)
         {
             GameObject slot = Instantiate(itemSlotPrefab, inventoryUIParent);
@@ -43,12 +41,10 @@ public class InventoryManager : MonoBehaviour
             slot.GetComponent<ItemSlot>().Setup(item, this);
         }
     }
-
     public void OnItemDragged(Item item)
     {
         selectedItem = item;
     }
-
     public void OnItemDropped(ItemSlot slot)
     {
         if (slot != null && selectedItem != null)
@@ -57,10 +53,8 @@ public class InventoryManager : MonoBehaviour
             selectedItem = null;
         }
     }
-
     public void EquipItem(Item item)
     {
-        // Equipar el ítem y actualizar la lógica del personaje
         Debug.Log($"Equipped: {item.name}");
     }
 }
