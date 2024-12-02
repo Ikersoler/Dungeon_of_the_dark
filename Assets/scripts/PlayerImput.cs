@@ -12,6 +12,7 @@ public class PlayerImput : MonoBehaviour
     public KeyCode right = KeyCode.D;
     public KeyCode turnLeft = KeyCode.Q;
     public KeyCode turnRight = KeyCode.E;
+    //public KeyCode openInventory = KeyCode.I;
 
     PlayerController controller;
 
@@ -29,6 +30,7 @@ public class PlayerImput : MonoBehaviour
         if (Input.GetKeyUp(right)) controller.MoveRight();
         if (Input.GetKeyUp(turnLeft)) controller.RotateLeft();
         if (Input.GetKeyUp(turnRight)) controller.RotateRight();
+       // if (Input.GetKeyUp(openInventory)) controller.RotateRight();
       
     }
 

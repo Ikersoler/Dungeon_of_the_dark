@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ArtifactPickup : MonoBehaviour
 {
-    public Item Item; // Referencia al `ScriptableObject` del artefacto
+    public Item artifact; // Referencia al ScriptableObject del artefacto
     private InventoryManager inventoryManager;
 
     void Start()
@@ -23,8 +23,9 @@ public class ArtifactPickup : MonoBehaviour
 
     void Pickup()
     {
-        Debug.Log("Picked up " + Item.itemName);
-        inventoryManager.AddItem(Item); // Agregar el artefacto al inventario
+        Debug.Log("Picked up " + artifact.itemName);
+        inventoryManager.AddItem(artifact); // Agregar el artefacto al inventario
         Destroy(gameObject); // Destruir el objeto en el mundo después de recogerlo
     }
+
 }

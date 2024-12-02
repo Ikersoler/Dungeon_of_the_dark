@@ -1,60 +1,148 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
-    public List<Item> items = new List<Item>();
-    public Transform inventoryUIParent;
-    public GameObject itemSlotPrefab;
-    private Item selectedItem;
+    public GameObject inventoryUIParent; 
+    public GameObject itemSlotPrefab;   
+    private List<Item> inventoryItems = new List<Item>(); 
+    private List<GameObject> itemSlots = new List<GameObject>(); 
+    private CanvasGroup inventoryCanvasGroup; 
+    private bool isInventoryVisible = false;
+    [SerializeField] private GameObject itemDropPrefab; // Prefab del objeto que aparecerá al soltar
+    [SerializeField] private Transform playerDropPoint; // Lugar donde aparecerán los objetos soltados
+    
 
-    void Start()
+    private void Start()
     {
-        UpdateInventoryUI();
+        
+        inventoryCanvasGroup = inventoryUIParent.GetComponent<CanvasGroup>();
+        if (inventoryCanvasGroup == null)
+        {
+            inventoryCanvasGroup = inventoryUIParent.gameObject.AddComponent<CanvasGroup>();
+        }
+
+        
+        HideInventory();
+        ShowInventory();
+
+
+
+
+
+
+
     }
 
-    public void AddItem(Item newItem)
+    
+
+    private void Update()
     {
-        items.Add(newItem);
-        UpdateInventoryUI();
+        
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            ToggleInventory();
+        }
     }
 
-    public void RemoveItem(Item itemToRemove)
+    public void ToggleInventory()
     {
-        items.Remove(itemToRemove);
-        UpdateInventoryUI();
+        if (isInventoryVisible)
+        {
+            HideInventory();
+        }
+        else
+        {
+            ShowInventory();
+        }
     }
+
+   
+
+    private void HideInventory()
+    {
+        isInventoryVisible = false;
+        inventoryCanvasGroup.alpha = 0;  
+        inventoryCanvasGroup.interactable = false;  
+        inventoryCanvasGroup.blocksRaycasts = false;  
+    }
+
+    private void ShowInventory()
+    {
+        isInventoryVisible = true;
+        inventoryCanvasGroup.alpha = 1;  
+        inventoryCanvasGroup.interactable = true;  
+        inventoryCanvasGroup.blocksRaycasts = true;  
+    }
+
+    public void DropItem(Item item)
+    {
+        if (item == null) return;
+
+        // 1. Remover el objeto del inventario
+        RemoveItem(item);
+
+        // 2. Instanciar el objeto en el mundo
+        GameObject droppedItem = Instantiate(itemDropPrefab, playerDropPoint.position, Quaternion.identity);
+
+        // 3. Configurar el objeto con los datos del ítem
+        ArtifactPickup pickup = droppedItem.GetComponent<ArtifactPickup>();
+        if (pickup != null)
+        {
+            pickup.artifact = item as Item; // Asigna el ScriptableObject asociado
+        }
+    }
+
+    public void RemoveItem(Item item)
+    {
+        // Lógica para eliminar el ítem del inventario
+        // Por ejemplo:
+        inventoryItems.Remove(item);
+        UpdateUI();
+    }
+
+
+    
+
 
     void UpdateInventoryUI()
     {
+       
+        foreach (GameObject slot in itemSlots)
+        {
+            Destroy(slot);
+        }
+        itemSlots.Clear();
         
-        foreach (Transform child in inventoryUIParent)
+        
+        foreach (Item item in inventoryItems)
         {
-            Destroy(child.gameObject);
+            GameObject newSlot = Instantiate(itemSlotPrefab, inventoryUIParent.transform);
+           
+            itemSlots.Add(newSlot);
+            Debug.Log("holi4");
         }
+    }
 
-        foreach (var item in items)
+    public void AddItem(Item artifact)
+    {
+        if (artifact != null)
         {
-            GameObject slot = Instantiate(itemSlotPrefab, inventoryUIParent);
-            slot.GetComponentInChildren<Image>().sprite = item.icon;
-            slot.GetComponent<ItemSlot>().Setup(item, this);
+            
+            inventoryItems.Add(artifact); 
+           
+            UpdateInventoryUI();
+            Debug.Log("holi2");
+            Debug.Log($"{artifact.itemName} añadido al inventario.");
         }
-    }
-    public void OnItemDragged(Item item)
-    {
-        selectedItem = item;
-    }
-    public void OnItemDropped(ItemSlot slot)
-    {
-        if (slot != null && selectedItem != null)
+        else
         {
-            EquipItem(selectedItem);
-            selectedItem = null;
+            
+            Debug.LogWarning("El ítem es nulo y no se puede agregar al inventario.");
         }
-    }
-    public void EquipItem(Item item)
-    {
-        Debug.Log($"Equipped: {item.name}");
     }
 }
