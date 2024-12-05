@@ -15,7 +15,12 @@ public class InventoryManager : MonoBehaviour
     private bool isInventoryVisible = false;
     [SerializeField] private GameObject itemDropPrefab; // Prefab del objeto que aparecerá al soltar
     [SerializeField] private Transform playerDropPoint; // Lugar donde aparecerán los objetos soltados
-    
+
+   
+
+    // Nuevo: Referencia al ítem seleccionado
+    private Item selectedItem = null;
+
 
     private void Start()
     {
@@ -47,6 +52,29 @@ public class InventoryManager : MonoBehaviour
         {
             ToggleInventory();
         }
+
+        if (Input.GetKeyDown(KeyCode.F) && selectedItem != null)
+        {
+            DropSelectedItem();
+        }
+
+    }
+
+    public void DropSelectedItem()
+    {
+        if (selectedItem == null) return;
+
+        // Elimina el objeto del inventario y lo coloca en el mundo
+        RemoveItem(selectedItem);
+        DropItem(selectedItem);
+
+        // Limpia el ítem seleccionado
+        selectedItem = null;
+    }
+
+    public void SetSelectedItem(Item item)
+    {
+        selectedItem = item; // Actualiza el ítem seleccionado
     }
 
     public void ToggleInventory()
@@ -102,7 +130,7 @@ public class InventoryManager : MonoBehaviour
         // Lógica para eliminar el ítem del inventario
         // Por ejemplo:
         inventoryItems.Remove(item);
-        UpdateUI();
+       //UpdateUI();
     }
 
 

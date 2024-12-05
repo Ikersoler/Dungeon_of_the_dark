@@ -15283,6 +15283,9 @@ MonoBehaviour:
   inventoryUIParent: {fileID: 1123840787}
   itemSlotPrefab: {fileID: 5404858645567688752, guid: 39edf89d0c2fc7241bcd9e624051d504,
     type: 3}
+  itemDropPrefab: {fileID: 5404858645567688752, guid: 39edf89d0c2fc7241bcd9e624051d504,
+    type: 3}
+  playerDropPoint: {fileID: 1103768086}
 --- !u!4 &2084743356
 Transform:
   m_ObjectHideFlags: 0

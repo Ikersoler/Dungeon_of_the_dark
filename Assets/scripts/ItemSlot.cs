@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
 {
     public Item item; // Referencia al ítem asociado a este slot
-    private Image icon; // Ícono del ítem
+   [SerializeField] private Image icon; // Ícono del ítem
     private CanvasGroup canvasGroup;
     private InventoryManager inventoryManager;
 
@@ -74,5 +74,21 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
             inventoryManager.DropItem(item);
         }
     }
+
+    public void OnItemSelected()
+    {
+        if (item != null)
+        {
+            Debug.Log($"Ítem seleccionado: {item.name}");
+            inventoryManager.SetSelectedItem(item); // Informa al InventoryManager del ítem seleccionado
+        }
+    }
+
+    private void HighlightSlot()
+    {
+        // Agrega lógica para resaltar el slot
+        // Por ejemplo, cambia el color de fondo o añade un borde visual
+    }
+
 }
 
