@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Espada_de_inicio
   m_EditorClassIdentifier: 
   itemName: Espada de madera
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  isEquippable: 1
+  icon: {fileID: 21300000, guid: 1550119b3fd3a6442a9eb9d6b24a7ee2, type: 3}
+  isEquippable: 0
   powerLevel: 1
   description: es una simple espada de madera pero es mejor que nada
   isLegendary: 0

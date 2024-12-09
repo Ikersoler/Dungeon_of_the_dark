@@ -15,11 +15,11 @@ public class InventoryManager : MonoBehaviour
     private bool isInventoryVisible = false;
     [SerializeField] private GameObject itemDropPrefab; // Prefab del objeto que aparecerá al soltar
     [SerializeField] private Transform playerDropPoint; // Lugar donde aparecerán los objetos soltados
+    private ItemSlot selectedItem = null;
 
-   
 
-    // Nuevo: Referencia al ítem seleccionado
-    private Item selectedItem = null;
+    
+
 
 
     private void Start()
@@ -33,8 +33,7 @@ public class InventoryManager : MonoBehaviour
 
         
         HideInventory();
-        ShowInventory();
-
+       
 
 
 
@@ -55,7 +54,7 @@ public class InventoryManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && selectedItem != null)
         {
-            DropSelectedItem();
+            selectedItem.OnDropButtonPressed();
         }
 
     }
@@ -64,17 +63,17 @@ public class InventoryManager : MonoBehaviour
     {
         if (selectedItem == null) return;
 
-        // Elimina el objeto del inventario y lo coloca en el mundo
-        RemoveItem(selectedItem);
-        DropItem(selectedItem);
+        
+        RemoveItem(selectedItem.item);
+        DropItem(selectedItem.item);
 
-        // Limpia el ítem seleccionado
+       
         selectedItem = null;
     }
 
-    public void SetSelectedItem(Item item)
+    public void SetSelectedItem(ItemSlot item)
     {
-        selectedItem = item; // Actualiza el ítem seleccionado
+        selectedItem = item; 
     }
 
     public void ToggleInventory()
@@ -111,24 +110,32 @@ public class InventoryManager : MonoBehaviour
     {
         if (item == null) return;
 
-        // 1. Remover el objeto del inventario
+        
         RemoveItem(item);
 
-        // 2. Instanciar el objeto en el mundo
-        GameObject droppedItem = Instantiate(itemDropPrefab, playerDropPoint.position, Quaternion.identity);
+        
+        GameObject droppedItem = Instantiate(itemDropPrefab, dropPosition(), Quaternion.identity);
 
-        // 3. Configurar el objeto con los datos del ítem
+        
         ArtifactPickup pickup = droppedItem.GetComponent<ArtifactPickup>();
         if (pickup != null)
         {
-            pickup.artifact = item as Item; // Asigna el ScriptableObject asociado
+            pickup.artifact = item as Item; 
         }
     }
 
+    private Vector3 dropPosition()
+    {
+        Vector3 drop = playerDropPoint.position + 2*playerDropPoint.forward;
+      //  drop.z += 2;
+        return drop;
+    }
+
+
+
     public void RemoveItem(Item item)
     {
-        // Lógica para eliminar el ítem del inventario
-        // Por ejemplo:
+       
         inventoryItems.Remove(item);
        //UpdateUI();
     }
@@ -150,9 +157,13 @@ public class InventoryManager : MonoBehaviour
         foreach (Item item in inventoryItems)
         {
             GameObject newSlot = Instantiate(itemSlotPrefab, inventoryUIParent.transform);
-           
+            ItemSlot itemSlot = newSlot.GetComponent<ItemSlot>();
+            
+            itemSlot.item = item;
+
             itemSlots.Add(newSlot);
-            Debug.Log("holi4");
+            //udate visuals  otro scrip 
+            //udate visuals  otro scrip 
         }
     }
 
@@ -164,7 +175,7 @@ public class InventoryManager : MonoBehaviour
             inventoryItems.Add(artifact); 
            
             UpdateInventoryUI();
-            Debug.Log("holi2");
+            
             Debug.Log($"{artifact.itemName} añadido al inventario.");
         }
         else

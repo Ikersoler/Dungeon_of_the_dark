@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5200941318ac764b8c771ad4393b0e6, type: 3}
   m_Name: item_prueba
   m_EditorClassIdentifier: 
-  itemName: 
+  itemName: prueba
   icon: {fileID: 0}
-  isEquippable: 0
+  isEquippable: 1
   powerLevel: 0
-  description: 
+  description: afssgfs
   isLegendary: 0

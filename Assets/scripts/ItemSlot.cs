@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IDropHandler
 {
-    public Item item; // Referencia al ítem asociado a este slot
-   [SerializeField] private Image icon; // Ícono del ítem
+    public Item item; 
+   //[SerializeField] private Image icon; 
     private CanvasGroup canvasGroup;
     private InventoryManager inventoryManager;
 
@@ -17,7 +17,7 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
 
     void Awake()
     {
-        icon = transform.Find("ItemIcon").GetComponent<Image>();
+       // icon = transform.Find("ItemIcon").GetComponent<Image>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -26,8 +26,8 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void ClearItem()
     {
         item = null;
-        icon.sprite = null;
-        icon.enabled = false;
+      //  icon.sprite = null;
+       // icon.enabled = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -50,28 +50,31 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log("Item dropped!");
+        
     }
 
-    public void SetItem(Item newItem)
-    {
-        item = newItem;
-        if (item != null)
-        {
-            icon.sprite = item.icon; // Asigna el icono
-            icon.enabled = true;
-        }
-        else
-        {
-            icon.sprite = null;
-            icon.enabled = false;
-        }
-    }
+   // public void SetItem(Item newItem)
+    //{
+      //  item = newItem;
+        //if (item != null)
+        //{
+         //   icon.sprite = item.icon; 
+           // icon.enabled = true;
+       // }
+       // else
+        //{
+          //  icon.sprite = null;
+            //icon.enabled = false;
+        //}
+    //}
 
     public void OnDropButtonPressed()
     {
         if (item != null)
         {
+            Debug.Log($"estoy dropeando{item}");
             inventoryManager.DropItem(item);
+            Destroy(gameObject);
         }
     }
 
@@ -80,15 +83,17 @@ public class ItemSlot : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
         if (item != null)
         {
             Debug.Log($"Ítem seleccionado: {item.name}");
-            inventoryManager.SetSelectedItem(item); // Informa al InventoryManager del ítem seleccionado
+            inventoryManager.SetSelectedItem(gameObject.GetComponent<ItemSlot>());
+           
+
         }
     }
 
-    private void HighlightSlot()
-    {
-        // Agrega lógica para resaltar el slot
-        // Por ejemplo, cambia el color de fondo o añade un borde visual
-    }
-
+    
+   // private void HighlightSlot()
+    //{
+       
+    //}
+    
 }
 
