@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c33f436bc384cc740905b414b0188a72, type: 3}
-  m_Name: Espada_de_inicio
+  m_Name: casco
   m_EditorClassIdentifier: 
-  itemName: espada simple
+  itemName: casco
   icon: {fileID: 0}
   isEquippable: 1
-  powerLevel: 0
-  description: una buena espada para iniciar
+  powerLevel: 1
+  description: una buena proteccion para la cabeza
   isLegendary: 0

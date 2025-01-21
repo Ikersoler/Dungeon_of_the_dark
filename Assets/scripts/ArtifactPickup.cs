@@ -7,8 +7,7 @@ public class ArtifactPickup : MonoBehaviour
     private InventoryManager inventoryManager;
 
     void Start()
-    {
-        
+    { 
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
@@ -21,12 +20,9 @@ public class ArtifactPickup : MonoBehaviour
         }
     }
 
-
-
-
     void Pickup()
     {
-        Debug.Log("Picked up " + artifact.itemName);
+        Debug.Log("Picked up " + artifact);
         inventoryManager.AddItem(artifact); 
         Destroy(gameObject); 
     }

@@ -3,7 +3,7 @@ using UnityEditor.Experimental;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+
 
 public class InventoryManager : MonoBehaviour
 {
@@ -13,12 +13,12 @@ public class InventoryManager : MonoBehaviour
     private List<GameObject> itemSlots = new List<GameObject>(); 
     private CanvasGroup inventoryCanvasGroup; 
     private bool isInventoryVisible = false;
-    [SerializeField] private GameObject itemDropPrefab; // Prefab del objeto que aparecerá al soltar
-    [SerializeField] private Transform playerDropPoint; // Lugar donde aparecerán los objetos soltados
+    [SerializeField] private GameObject itemDropPrefab; 
+    [SerializeField] private Transform playerDropPoint;
     private ItemSlot selectedItem = null;
+    private List<Item> itemList;
 
 
-    
 
 
 
@@ -30,27 +30,22 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryCanvasGroup = inventoryUIParent.gameObject.AddComponent<CanvasGroup>();
         }
-
         
         HideInventory();
-       
 
-
-
-
-
-
+        itemList = new List<Item>();
     }
-
-    
 
     private void Update()
     {
-        
+        //con esto oculto y muestro el inventario
+
         if (Input.GetKeyDown(KeyCode.I))
         {
             ToggleInventory();
         }
+
+        //con esto tiro los objetos
 
         if (Input.GetKeyDown(KeyCode.F) && selectedItem != null)
         {
@@ -59,14 +54,15 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+
+
     public void DropSelectedItem()
     {
+        
         if (selectedItem == null) return;
 
-        
         RemoveItem(selectedItem.item);
         DropItem(selectedItem.item);
-
        
         selectedItem = null;
     }
@@ -88,8 +84,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-   
-
+    //gracias a esto puedo ocultar el inventario por codigo
     private void HideInventory()
     {
         isInventoryVisible = false;
@@ -120,14 +115,16 @@ public class InventoryManager : MonoBehaviour
         ArtifactPickup pickup = droppedItem.GetComponent<ArtifactPickup>();
         if (pickup != null)
         {
+            //comprobar si se puede convertir algo en item
             pickup.artifact = item as Item; 
         }
     }
 
     private Vector3 dropPosition()
     {
+        //esto lo que hade es dorpear el objeto dos posiciones delante mia en la direccion en la que este mirando
+
         Vector3 drop = playerDropPoint.position + 2*playerDropPoint.forward;
-      //  drop.z += 2;
         return drop;
     }
 
@@ -137,7 +134,7 @@ public class InventoryManager : MonoBehaviour
     {
        
         inventoryItems.Remove(item);
-       //UpdateUI();
+       
     }
 
 
@@ -163,7 +160,7 @@ public class InventoryManager : MonoBehaviour
 
             itemSlots.Add(newSlot);
             //udate visuals  otro scrip 
-            //udate visuals  otro scrip 
+             
         }
     }
 
@@ -183,5 +180,18 @@ public class InventoryManager : MonoBehaviour
             
             Debug.LogWarning("El ítem es nulo y no se puede agregar al inventario.");
         }
+    }
+
+    public bool HasItem(string itemName)
+    {
+        foreach (Item item in inventoryItems)
+        {
+            Debug.Log($"it{item.itemName}");
+            if (item.itemName == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
