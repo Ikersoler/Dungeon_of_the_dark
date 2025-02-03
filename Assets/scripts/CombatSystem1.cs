@@ -16,10 +16,10 @@ public class CombatSystem : MonoBehaviour
     public float perfectZoneMax = 0.55f;
 
     [Header("UI Settings")]
-    public GameObject combatUI; // UI del combate
-    public GameObject basicUI;  // UI básica
-    public Button attackButton; // Botón para atacar
-    public Button fleeButton;   // Botón para huir
+    public GameObject combatUI;
+    public GameObject basicUI;
+    public Button attackButton;
+    public Button fleeButton;
 
     private Enemy currentEnemy;
 
@@ -30,11 +30,9 @@ public class CombatSystem : MonoBehaviour
             precisionBar.value = 0f;
         }
 
-        SwitchToBasicUI();
-
-        // Vincular botones a métodos
-        if (attackButton != null) attackButton.onClick.AddListener(Attack);
-        if (fleeButton != null) fleeButton.onClick.AddListener(Flee);
+        //  Asegurar que la UI básica está activa y la UI de combate desactivada
+        if (combatUI != null) combatUI.SetActive(false);
+        if (basicUI != null) basicUI.SetActive(true);
     }
 
     private void Update()
@@ -54,9 +52,12 @@ public class CombatSystem : MonoBehaviour
     {
         if (precisionBar == null) return;
 
+        //  USAMOS Time.unscaledDeltaTime PARA QUE FUNCIONE DURANTE LA PAUSA
+        float moveAmount = Time.unscaledDeltaTime * barSpeed;
+
         if (movingRight)
         {
-            precisionBar.value += Time.deltaTime * barSpeed;
+            precisionBar.value += moveAmount;
             if (precisionBar.value >= 1f)
             {
                 movingRight = false;
@@ -64,7 +65,7 @@ public class CombatSystem : MonoBehaviour
         }
         else
         {
-            precisionBar.value -= Time.deltaTime * barSpeed;
+            precisionBar.value -= moveAmount;
             if (precisionBar.value <= 0f)
             {
                 movingRight = true;
@@ -78,26 +79,34 @@ public class CombatSystem : MonoBehaviour
 
         if (precisionBar.value >= perfectZoneMin && precisionBar.value <= perfectZoneMax)
         {
-            Debug.Log("Perfect Hit!");
-            currentEnemy.TakeDamage(50); // Daño al enemigo
+            Debug.Log("¡Golpe Perfecto!");
+            currentEnemy.TakeDamage(50);
         }
         else
         {
-            Debug.Log("Missed!");
+            Debug.Log("¡Fallaste!");
         }
     }
 
     public void StartCombat(Enemy enemy)
     {
+        Debug.Log("¡Combate iniciado contra " + enemy.enemyName + "!");
         currentEnemy = enemy;
         isCombatActive = true;
         if (precisionBar != null) precisionBar.value = 0f;
+
+        SwitchToCombatUI();
+        PauseGame();
     }
 
     public void EndCombat()
     {
+        Debug.Log("Combate terminado.");
         isCombatActive = false;
         currentEnemy = null;
+
+        SwitchToBasicUI();
+        ResumeGame();
     }
 
     private void SwitchToCombatUI()
@@ -122,10 +131,9 @@ public class CombatSystem : MonoBehaviour
         Time.timeScale = 1f; // Reanuda el juego
     }
 
-    // Métodos vinculados a los botones de la UI
     private void Attack()
     {
-        Debug.Log("Atacando al enemigo...");
+        Debug.Log("Atacando...");
         CheckHit();
     }
 

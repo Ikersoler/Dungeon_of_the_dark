@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
         // Verifica si el objeto que toca es el jugador
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Jugador ha tocado al enemigo. Iniciando combate...");
+            Debug.Log("Jugador tocó al enemigo: " + enemyName);
             combatSystem.StartCombat(this); // Inicia el combate con este enemigo
         }
     }
@@ -34,8 +34,9 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log(enemyName + " has been defeated!");
-        OnEnemyDefeated?.Invoke(this); // Notifica al sistema de combate u otros sistemas
-        Destroy(gameObject);
+        Debug.Log(enemyName + " ha sido derrotado.");
+
+        combatSystem.EndCombat(); // Asegurar que el combate finalice antes de destruir
+        Destroy(gameObject); //  Se destruye el enemigo después de terminar el combate
     }
 }
