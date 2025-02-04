@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
         // Instancia al enemigo en la escena
         currentEnemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-        combatSystem.StartCombat(currentEnemy); // Inicia el combate con el nuevo enemigo
+       
     }
 
     // Este método puede ser llamado por el evento del enemigo al morir

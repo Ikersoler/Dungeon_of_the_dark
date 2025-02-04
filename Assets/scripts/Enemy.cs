@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using System.Collections;
+
 public class Enemy : MonoBehaviour
 {
     public string enemyName;
@@ -35,8 +37,22 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         Debug.Log(enemyName + " ha sido derrotado.");
+        combatSystem.EndCombat();
+        StartCoroutine(DestroyAfterDelay());
+    }
+
+    private IEnumerator DestroyAfterDelay()
+    {
+        yield return new WaitForSeconds(1.0f); // Ajusta el tiempo según sea necesario
+        Destroy(gameObject);
+    }
+    /*
+    private void Die()
+    {
+        Debug.Log(enemyName + " ha sido derrotado.");
 
         combatSystem.EndCombat(); // Asegurar que el combate finalice antes de destruir
         Destroy(gameObject); //  Se destruye el enemigo después de terminar el combate
     }
+    */
 }

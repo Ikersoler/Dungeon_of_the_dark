@@ -30,9 +30,9 @@ public class CombatSystem : MonoBehaviour
             precisionBar.value = 0f;
         }
 
+        SwitchToBasicUI();
         //  Asegurar que la UI básica está activa y la UI de combate desactivada
-        if (combatUI != null) combatUI.SetActive(false);
-        if (basicUI != null) basicUI.SetActive(true);
+        
     }
 
     private void Update()
@@ -97,6 +97,7 @@ public class CombatSystem : MonoBehaviour
 
         SwitchToCombatUI();
         PauseGame();
+      
     }
 
     public void EndCombat()
@@ -111,12 +112,14 @@ public class CombatSystem : MonoBehaviour
 
     private void SwitchToCombatUI()
     {
+        Debug.Log("combate");
         if (combatUI != null) combatUI.SetActive(true);
         if (basicUI != null) basicUI.SetActive(false);
     }
 
     private void SwitchToBasicUI()
     {
+        Debug.Log("basic");
         if (combatUI != null) combatUI.SetActive(false);
         if (basicUI != null) basicUI.SetActive(true);
     }
@@ -137,7 +140,7 @@ public class CombatSystem : MonoBehaviour
         CheckHit();
     }
 
-    private void Flee()
+    public void Flee()
     {
         Debug.Log("El jugador ha huido del combate.");
         EndCombat();
