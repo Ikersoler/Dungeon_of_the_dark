@@ -4,17 +4,22 @@ public class GameManager : MonoBehaviour
 {
     public CombatSystem combatSystem; // Referencia al sistema de combate
     public Enemy enemyPrefab;         // Prefab del enemigo
-    public Transform spawnPoint;      // Punto de aparición del enemigo
+    public Transform spawnPoint;      // array 
 
     private Enemy currentEnemy;
-
+    
     private void Start()
     {
-        SpawnEnemy();
-    }
+        //bucle para todos los spawn points 
 
+
+       // SpawnEnemy();
+
+    }
+    /*
+    
     // Método para crear y configurar un nuevo enemigo
-    public void SpawnEnemy()
+    public void SpawnEnemy(Transform position)
     {
         if (enemyPrefab == null || spawnPoint == null || combatSystem == null)
         {
@@ -23,10 +28,10 @@ public class GameManager : MonoBehaviour
         }
 
         // Instancia al enemigo en la escena
-        currentEnemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        currentEnemy = Instantiate(enemyPrefab, position.position, Quaternion.identity);
        
     }
-
+    
     // Este método puede ser llamado por el evento del enemigo al morir
     private void OnEnable()
     {
@@ -49,4 +54,5 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(SpawnEnemy), 2f); // Espera 2 segundos
         }
     }
+    */
 }

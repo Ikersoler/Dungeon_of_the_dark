@@ -12,8 +12,8 @@ public class CombatSystem : MonoBehaviour
 
     [Header("Combat Settings")]
     public KeyCode actionKey = KeyCode.Space;
-    public float perfectZoneMin = 0.45f;
-    public float perfectZoneMax = 0.55f;
+    private float perfectZoneMin = 0.10f;
+    private float perfectZoneMax = 0.90f;
 
     [Header("UI Settings")]
     public GameObject combatUI;
@@ -104,6 +104,7 @@ public class CombatSystem : MonoBehaviour
     {
         Debug.Log("Combate terminado.");
         isCombatActive = false;
+        currentEnemy.gameObject.SetActive(false);
         currentEnemy = null;
 
         SwitchToBasicUI();
@@ -129,7 +130,7 @@ public class CombatSystem : MonoBehaviour
         Time.timeScale = 0f; // Pausa el juego
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1f; // Reanuda el juego
     }

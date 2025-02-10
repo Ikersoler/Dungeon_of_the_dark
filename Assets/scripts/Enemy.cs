@@ -14,6 +14,17 @@ public class Enemy : MonoBehaviour
     [Header("Combat Settings")]
     public CombatSystem combatSystem; // Referencia al sistema de combate
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+           gameObject.SetActive(false);
+
+        }
+     
+    }
+
+
     private void OnTriggerEnter(Collider other)
     {
         // Verifica si el objeto que toca es el jugador
@@ -27,32 +38,27 @@ public class Enemy : MonoBehaviour
     {
         health -= amount;
         Debug.Log(enemyName + " took " + amount + " damage! Remaining health: " + health);
-
+        
         if (health <= 0)
         {
+            
             Die();
         }
     }
+   
 
     private void Die()
     {
+        
         Debug.Log(enemyName + " ha sido derrotado.");
+        
+       
         combatSystem.EndCombat();
-        StartCoroutine(DestroyAfterDelay());
-    }
-
-    private IEnumerator DestroyAfterDelay()
-    {
-        yield return new WaitForSeconds(1.0f); // Ajusta el tiempo según sea necesario
-        Destroy(gameObject);
-    }
-    /*
-    private void Die()
-    {
-        Debug.Log(enemyName + " ha sido derrotado.");
-
-        combatSystem.EndCombat(); // Asegurar que el combate finalice antes de destruir
         Destroy(gameObject); //  Se destruye el enemigo después de terminar el combate
+        Debug.Log(gameObject.name);
+        
     }
-    */
+   
+       
+    
 }
