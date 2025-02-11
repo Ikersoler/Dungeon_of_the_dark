@@ -2,57 +2,29 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public CombatSystem combatSystem; // Referencia al sistema de combate
-    public Enemy enemyPrefab;         // Prefab del enemigo
-    public Transform spawnPoint;      // array 
-
+    public CombatSystem combatSystem;
+    public Enemy enemyPrefab;
+    public Transform[] spawnPoints; // Cambiado a un array para múltiples puntos de aparición
     private Enemy currentEnemy;
-    
+
     private void Start()
     {
-        //bucle para todos los spawn points 
-
-
-       // SpawnEnemy();
-
+        // Bucle para todos los spawn points
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            SpawnEnemy(spawnPoint); // Llama a SpawnEnemy para cada punto de aparición
+        }
     }
-    /*
-    
-    // Método para crear y configurar un nuevo enemigo
+
     public void SpawnEnemy(Transform position)
     {
-        if (enemyPrefab == null || spawnPoint == null || combatSystem == null)
+        if (enemyPrefab == null || position == null || combatSystem == null)
         {
             Debug.LogError("Faltan referencias en el GameManager");
             return;
         }
-
-        // Instancia al enemigo en la escena
+        // Instancia al enemigo en la escena 
         currentEnemy = Instantiate(enemyPrefab, position.position, Quaternion.identity);
-       
     }
     
-    // Este método puede ser llamado por el evento del enemigo al morir
-    private void OnEnable()
-    {
-        Enemy.OnEnemyDefeated += HandleEnemyDefeated;
-    }
-
-    private void OnDisable()
-    {
-        Enemy.OnEnemyDefeated -= HandleEnemyDefeated;
-    }
-
-    private void HandleEnemyDefeated(Enemy defeatedEnemy)
-    {
-        if (defeatedEnemy == currentEnemy)
-        {
-            Debug.Log("Enemigo derrotado. Preparando el siguiente combate...");
-            combatSystem.EndCombat();
-
-            // Espera un momento antes de crear un nuevo enemigo (simulación de transición)
-            Invoke(nameof(SpawnEnemy), 2f); // Espera 2 segundos
-        }
-    }
-    */
 }
