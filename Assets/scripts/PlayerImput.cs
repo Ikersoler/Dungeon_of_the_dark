@@ -30,8 +30,6 @@ public class PlayerImput : MonoBehaviour
         if (Input.GetKeyUp(right)) controller.MoveRight();
         if (Input.GetKeyUp(turnLeft)) controller.RotateLeft();
         if (Input.GetKeyUp(turnRight)) controller.RotateRight();
-       
-      
     }
 
 }
