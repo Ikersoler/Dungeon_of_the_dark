@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using System.Collections;
+
 public class Enemy : MonoBehaviour
 {
     public string enemyName;
@@ -11,6 +13,17 @@ public class Enemy : MonoBehaviour
 
     [Header("Combat Settings")]
     public CombatSystem combatSystem; // Referencia al sistema de combate
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+           gameObject.SetActive(false);
+
+        }
+     
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,18 +38,27 @@ public class Enemy : MonoBehaviour
     {
         health -= amount;
         Debug.Log(enemyName + " took " + amount + " damage! Remaining health: " + health);
-
+        
         if (health <= 0)
         {
+            
             Die();
         }
     }
+   
 
     private void Die()
     {
+        
         Debug.Log(enemyName + " ha sido derrotado.");
-
-        combatSystem.EndCombat(); // Asegurar que el combate finalice antes de destruir
+        
+       
+        combatSystem.EndCombat();
         Destroy(gameObject); //  Se destruye el enemigo después de terminar el combate
+        Debug.Log(gameObject.name);
+        
     }
+   
+       
+    
 }

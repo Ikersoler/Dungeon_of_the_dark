@@ -12,8 +12,8 @@ public class CombatSystem : MonoBehaviour
 
     [Header("Combat Settings")]
     public KeyCode actionKey = KeyCode.Space;
-    public float perfectZoneMin = 0.45f;
-    public float perfectZoneMax = 0.55f;
+    private float perfectZoneMin = 0.10f;
+    private float perfectZoneMax = 0.90f;
 
     [Header("UI Settings")]
     public GameObject combatUI;
@@ -30,9 +30,9 @@ public class CombatSystem : MonoBehaviour
             precisionBar.value = 0f;
         }
 
+        SwitchToBasicUI();
         //  Asegurar que la UI básica está activa y la UI de combate desactivada
-        if (combatUI != null) combatUI.SetActive(false);
-        if (basicUI != null) basicUI.SetActive(true);
+        
     }
 
     private void Update()
@@ -97,12 +97,14 @@ public class CombatSystem : MonoBehaviour
 
         SwitchToCombatUI();
         PauseGame();
+      
     }
 
     public void EndCombat()
     {
         Debug.Log("Combate terminado.");
         isCombatActive = false;
+        currentEnemy.gameObject.SetActive(false);
         currentEnemy = null;
 
         SwitchToBasicUI();
@@ -111,12 +113,14 @@ public class CombatSystem : MonoBehaviour
 
     private void SwitchToCombatUI()
     {
+        Debug.Log("combate");
         if (combatUI != null) combatUI.SetActive(true);
         if (basicUI != null) basicUI.SetActive(false);
     }
 
     private void SwitchToBasicUI()
     {
+        Debug.Log("basic");
         if (combatUI != null) combatUI.SetActive(false);
         if (basicUI != null) basicUI.SetActive(true);
     }
@@ -126,7 +130,7 @@ public class CombatSystem : MonoBehaviour
         Time.timeScale = 0f; // Pausa el juego
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1f; // Reanuda el juego
     }
@@ -137,7 +141,7 @@ public class CombatSystem : MonoBehaviour
         CheckHit();
     }
 
-    private void Flee()
+    public void Flee()
     {
         Debug.Log("El jugador ha huido del combate.");
         EndCombat();
