@@ -134,7 +134,7 @@ public class CombatSystem : MonoBehaviour
     {
         Time.timeScale = 1f; // Reanuda el juego
     }
-
+/*
     private void Attack()
     {
         Debug.Log("Atacando...");
@@ -146,4 +146,5 @@ public class CombatSystem : MonoBehaviour
         Debug.Log("El jugador ha huido del combate.");
         EndCombat();
     }
+    */
 }
