@@ -10,9 +10,18 @@ public class Enemy : MonoBehaviour
     public delegate void EnemyDefeated(Enemy enemy);
     public static event EnemyDefeated OnEnemyDefeated;
 
+    public int attackDamage = 10;
+    public float attackInterval = 2f; // Tiempo entre ataques
 
     [Header("Combat Settings")]
     public CombatSystem combatSystem; // Referencia al sistema de combate
+    private bool isInCombat = false;
+    private PlayerHealth playerHealth;
+
+    private void Start()
+    {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+    }
 
     private void Update()
     {
@@ -32,6 +41,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Jugador tocó al enemigo: " + enemyName);
             combatSystem.StartCombat(this); // Inicia el combate con este enemigo
+            isInCombat = true;
+            StartCoroutine(AttackPlayer()); // Comienza a atacar al jugador
         }
     }
     public void TakeDamage(int amount)
@@ -58,7 +69,17 @@ public class Enemy : MonoBehaviour
         Debug.Log(gameObject.name);
         
     }
-   
-       
-    
+
+    private IEnumerator AttackPlayer()
+    {
+        while (isInCombat && playerHealth != null)
+        {
+            yield return new WaitForSeconds(attackInterval);
+            Debug.Log(enemyName + " ataca al jugador e inflige " + attackDamage + " de daño.");
+            playerHealth.TakeDamage(attackDamage);
+        }
+    }
+
+
+
 }

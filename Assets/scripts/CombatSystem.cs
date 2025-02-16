@@ -94,7 +94,6 @@ public class CombatSystem : MonoBehaviour
         currentEnemy = enemy;
         isCombatActive = true;
         if (precisionBar != null) precisionBar.value = 0f;
-
         SwitchToCombatUI();
         PauseGame();
       
@@ -104,7 +103,20 @@ public class CombatSystem : MonoBehaviour
     {
         Debug.Log("Combate terminado.");
         isCombatActive = false;
-        currentEnemy.gameObject.SetActive(false);
+
+        if (currentEnemy != null)
+        {
+            currentEnemy.gameObject.SetActive(false);
+        }
+
+        currentEnemy = null;
+        SwitchToBasicUI();
+        ResumeGame();
+    }
+    public void FleeCombat()
+    {
+        Debug.Log("Has huido del combate.");
+        isCombatActive = false;
         currentEnemy = null;
 
         SwitchToBasicUI();
@@ -134,17 +146,17 @@ public class CombatSystem : MonoBehaviour
     {
         Time.timeScale = 1f; // Reanuda el juego
     }
-/*
-    private void Attack()
+    
+    public void Attack()
     {
         Debug.Log("Atacando...");
         CheckHit();
     }
-
+    
     public void Flee()
     {
         Debug.Log("El jugador ha huido del combate.");
-        EndCombat();
+        FleeCombat();
     }
-    */
+    
 }
