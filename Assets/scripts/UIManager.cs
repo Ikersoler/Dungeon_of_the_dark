@@ -8,10 +8,19 @@ public class UIManager : MonoBehaviour
 
     public GameObject pausePanel;
 
+    public GameObject StartPanel;
+
+  
 
     private void Start()
     {
         HidePause();
+
+        if (StartPanel != null)
+        {
+            StartPanel.SetActive(true);
+        }
+
         
     }
 
@@ -47,18 +56,30 @@ public class UIManager : MonoBehaviour
     }
 
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
 
+    public void opciones()
+    {
+        SceneManager.LoadScene(2);
+    }
 
+    public void Game()
+    {
+        SceneManager.LoadScene(0);
+    }
 
+    public void Credits()
+    {
+        SceneManager.LoadScene(4);
+    }
 
-
-
-
-
-
-
-
-
+    public void exit()
+    {
+        Application.Quit();
+    }
 
 
     public void OnAttackButton()
