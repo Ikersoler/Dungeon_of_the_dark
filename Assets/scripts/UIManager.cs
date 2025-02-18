@@ -9,19 +9,30 @@ public class UIManager : MonoBehaviour
     public GameObject pausePanel;
 
     public GameObject StartPanel;
+    public GameObject GameOverPanel;
+    public GameObject WinPanel;
 
   
 
     private void Start()
     {
-        HidePause();
+        if(combatSystem != null) 
+        {
+            HidePause();
+        }
+        
 
         if (StartPanel != null)
         {
             StartPanel.SetActive(true);
         }
-
+        if (GameOverPanel != null)
+        {
+            hidePanel(); 
+        }
         
+
+
     }
 
     private void Update()
@@ -44,21 +55,26 @@ public class UIManager : MonoBehaviour
     {
       combatSystem.combatUI.SetActive(false);
       combatSystem.basicUI.SetActive(false);
+      GameOverPanel.SetActive(false);
       pausePanel.SetActive(true);
     }
 
 
     private void HidePause()
     {
+        Debug.Log("algo");
         combatSystem.combatUI.SetActive(false);
         combatSystem.basicUI.SetActive(false);
+        GameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
     }
 
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
+
     }
 
     public void opciones()
@@ -90,5 +106,22 @@ public class UIManager : MonoBehaviour
     public void OnFleeButton()
     {
         combatSystem.Flee();
+    }
+
+    public void showGameOver()
+    {
+        GameOverPanel.SetActive(true);
+        WinPanel.SetActive(false);
+        combatSystem.hideAllPanels();
+    }
+    public void HideGameOver()
+    {
+        GameOverPanel.SetActive(false);
+    }
+
+    public void hidePanel()
+    {
+        GameOverPanel.SetActive(false);
+        WinPanel.SetActive(false);
     }
 }

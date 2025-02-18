@@ -6,11 +6,12 @@ public class PlayerHealth : MonoBehaviour
     public int maxHealth = 100;
     private int currentHealth;
     public Slider healthBar; // Referencia a la barra de vida
-
+    [SerializeField] private UIManager uiManager;
     private void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
+
     }
 
     public void TakeDamage(int damage)
@@ -38,6 +39,14 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("El jugador ha muerto.");
+        Time.timeScale = 0;
+        uiManager.showGameOver();
         // Aquí podrías agregar lógica de "Game Over" o reinicio del nivel
+    }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+        
     }
 }

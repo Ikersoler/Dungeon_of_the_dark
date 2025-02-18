@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public CombatSystem combatSystem;
-    public Enemy enemyPrefab;
+    public GameObject enemyPrefab;
     public Transform[] spawnPoints; // Cambiado a un array para múltiples puntos de aparición
     private Enemy currentEnemy;
 
@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         // Instancia al enemigo en la escena 
-        currentEnemy = Instantiate(enemyPrefab, position.position, Quaternion.identity);
+        currentEnemy = Instantiate(enemyPrefab, position.position, Quaternion.identity).GetComponent<Enemy>();
+        currentEnemy.combatSystem = combatSystem;
     }
     
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public const int TRANSITION_VELOCITY = 10;
+
     public bool softTransition = false;
     public float transitionVelocity = 10f;
     public float rotationTransitionVelocity = 500f;
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         targetGridPos = Vector3Int.RoundToInt(transform.position);
+        transitionVelocity = TRANSITION_VELOCITY;
     }
 
     private void FixedUpdate()
@@ -25,30 +28,26 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        if (true) 
+        
+        prevTargetGridPos = targetGridPos;
+
+        Vector3 targetPosition = targetGridPos;
+
+        if (targetRotation.y > 270f && targetRotation.y < 361f) targetRotation.y = 0f;
+        if (targetRotation.y < 0f) targetRotation.y = 270f;
+
+        if (!softTransition)
         {
-            prevTargetGridPos = targetGridPos;
-
-            Vector3 targetPosition = targetGridPos;
-
-            if (targetRotation.y > 270f && targetRotation.y < 361f) targetRotation.y = 0f;
-            if (targetRotation.y < 0f) targetRotation.y = 270f;
-
-            if (!softTransition)
-            {
-                transform.position = targetPosition;
-                transform.rotation = Quaternion.Euler(targetRotation);
-            }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * transitionVelocity);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotationTransitionVelocity);
-            }
+            transform.position = targetPosition;
+            transform.rotation = Quaternion.Euler(targetRotation);
         }
         else
         {
-            targetGridPos = prevTargetGridPos;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * transitionVelocity);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(targetRotation), Time.deltaTime * rotationTransitionVelocity);
         }
+        
+       
     }
 
     

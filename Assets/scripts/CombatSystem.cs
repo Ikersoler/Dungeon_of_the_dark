@@ -22,7 +22,7 @@ public class CombatSystem : MonoBehaviour
     public Button fleeButton;
 
     private Enemy currentEnemy;
-
+    private PlayerController playerController;
     private void Start()
     {
         if (precisionBar != null)
@@ -32,7 +32,7 @@ public class CombatSystem : MonoBehaviour
 
         SwitchToBasicUI();
         //  Asegurar que la UI básica está activa y la UI de combate desactivada
-        
+        playerController = FindObjectOfType<PlayerController>();  
     }
 
     private void Update()
@@ -95,7 +95,7 @@ public class CombatSystem : MonoBehaviour
         isCombatActive = true;
         if (precisionBar != null) precisionBar.value = 0f;
         SwitchToCombatUI();
-        PauseGame();
+        playerController.transitionVelocity = 0f;
       
     }
 
@@ -111,7 +111,7 @@ public class CombatSystem : MonoBehaviour
 
         currentEnemy = null;
         SwitchToBasicUI();
-        ResumeGame();
+        playerController.transitionVelocity = PlayerController.TRANSITION_VELOCITY;
     }
     public void FleeCombat()
     {
@@ -128,6 +128,7 @@ public class CombatSystem : MonoBehaviour
         Debug.Log("combate");
         if (combatUI != null) combatUI.SetActive(true);
         if (basicUI != null) basicUI.SetActive(false);
+       
     }
 
     private void SwitchToBasicUI()
@@ -159,4 +160,10 @@ public class CombatSystem : MonoBehaviour
         FleeCombat();
     }
     
+    public void hideAllPanels()
+    {
+         combatUI.SetActive(false);
+         basicUI.SetActive(false);
+
+    }
 }

@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Verifica si el objeto que toca es el jugador
+        
         if (other.CompareTag("Player"))
         {
             Debug.Log("Jugador tocó al enemigo: " + enemyName);
@@ -72,11 +73,14 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
-        while (isInCombat && playerHealth != null)
+        
+        while (isInCombat && playerHealth != null && !playerHealth.IsDead())
         {
+            Debug.Log($"condicion{attackInterval}");
             yield return new WaitForSeconds(attackInterval);
             Debug.Log(enemyName + " ataca al jugador e inflige " + attackDamage + " de daño.");
             playerHealth.TakeDamage(attackDamage);
+
         }
     }
 
