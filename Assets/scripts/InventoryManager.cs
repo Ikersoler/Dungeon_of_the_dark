@@ -52,6 +52,11 @@ public class InventoryManager : MonoBehaviour
             selectedItem.OnDropButtonPressed();
         }
 
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            UsePotion();
+        }
+
     }
 
 
@@ -193,5 +198,26 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return false;
+    }
+
+
+   public void UsePotion()
+    {
+        foreach (Item item in inventoryItems)
+        {
+            if (item.isPotion)
+            {
+                PlayerHealth playerHealth = FindObjectOfType<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    playerHealth.Heal(item.healAmount);
+                    RemoveItem(item);
+                    UpdateInventoryUI();
+                    Debug.Log($"Usaste {item.itemName} y recuperaste {item.healAmount} de vida.");
+                }
+                return;
+            }
+        }
+        Debug.Log("No tienes pociones disponibles.");
     }
 }

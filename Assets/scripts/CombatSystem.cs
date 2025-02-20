@@ -166,4 +166,14 @@ public class CombatSystem : MonoBehaviour
          basicUI.SetActive(false);
 
     }
+    /*
+    public void isWin()
+    {
+        if
+        {
+            
+        }
+    }
+    */
+
 }

@@ -73,7 +73,7 @@ public class UIManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
 
     }
 
@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour
 
     public void Game()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void Credits()
@@ -122,6 +122,16 @@ public class UIManager : MonoBehaviour
     public void hidePanel()
     {
         GameOverPanel.SetActive(false);
+        WinPanel.SetActive(false);
+    }
+    public void showWin()
+    {
+        GameOverPanel.SetActive(false);
+        WinPanel.SetActive(true);
+        combatSystem.hideAllPanels();
+    }
+    public void HideWin()
+    {
         WinPanel.SetActive(false);
     }
 }

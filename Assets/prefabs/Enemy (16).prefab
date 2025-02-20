@@ -121,8 +121,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f2b3b01a8af47e418d0d62e456dad1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: slime
+  enemyName: boss
   health: 500
+  attackDamage: 10
+  attackInterval: 2
   combatSystem: {fileID: 0}
 --- !u!54 &7722983578771858458
 Rigidbody:

@@ -18,3 +18,5 @@ MonoBehaviour:
   powerLevel: 0
   description: "te cura una peque\xF1a cantidad de vida"
   isLegendary: 0
+  isPotion: 1
+  healAmount: 100

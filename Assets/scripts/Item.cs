@@ -13,4 +13,7 @@ public class Item : ScriptableObject
     public int powerLevel;
     public string description;
     public bool isLegendary;
+    
+    public bool isPotion;
+    public int healAmount;
 }
