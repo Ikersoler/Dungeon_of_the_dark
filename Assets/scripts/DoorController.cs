@@ -13,16 +13,17 @@ public class DoorController : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("he tocao puelta");
-            TryOpenDoor();
-        }
-    }
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log("colision");
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Debug.Log("he tocao puelta");
+    //        TryOpenDoor();
+    //    }
+    //}
 
-    void TryOpenDoor()
+    public void TryOpenDoor()
     {
         if (inventoryManager.HasItem(requiredKey))
         {

@@ -31,9 +31,15 @@ public class PlayerHealth : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        if (healthBar != null)
+        if (healthBar != null && normalhealthBar != null)
         {
-            healthBar.value = (float)currentHealth / maxHealth;
+
+            float updatedHealth = (float)currentHealth / maxHealth;
+
+            healthBar.value = updatedHealth;
+            normalhealthBar.value = updatedHealth;
+
+
         }
     }
 
@@ -56,6 +62,6 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         Debug.Log("Vida actual: " + currentHealth);
-        
+        UpdateHealthBar();
     }
 }

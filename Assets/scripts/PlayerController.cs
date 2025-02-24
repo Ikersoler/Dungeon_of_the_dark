@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float rotationTransitionVelocity = 500f;
     public float raycastDistance = 1f; // Distancia del raycast para detectar obstáculos
 
+    [SerializeField] private LayerMask obstacleLayer;
     Vector3 targetGridPos;
     Vector3 prevTargetGridPos;
     Vector3 targetRotation;
@@ -60,6 +61,10 @@ public class PlayerController : MonoBehaviour
         {
             targetGridPos += transform.forward;
         }
+        else
+        {
+            Debug.Log("obsataculo");
+        }
     }
 
     public void MoveBack()
@@ -88,7 +93,26 @@ public class PlayerController : MonoBehaviour
 
     bool ObstacleInDirection(Vector3 direction)
     {
-        return Physics.Raycast(transform.position, direction, raycastDistance);
+        RaycastHit hit;
+        bool obstacle = Physics.Raycast(transform.position, direction,out hit, raycastDistance, obstacleLayer);
+        if (!obstacle)
+        {
+            return false;
+        }
+
+        GameObject obstacleGO = hit.collider.gameObject;
+
+        if(obstacleGO.CompareTag("Puerta"))
+        {
+            Debug.Log("puerta");
+            DoorController doorController = obstacleGO.GetComponent<DoorController>();
+            doorController.TryOpenDoor();
+
+
+        }
+
+        return true;
+
     }
 
     bool AtRest

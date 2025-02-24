@@ -14,10 +14,10 @@ public class Enemy : MonoBehaviour
     public float attackInterval = 2f; // Tiempo entre ataques
 
     [Header("Combat Settings")]
-    public CombatSystem combatSystem; // Referencia al sistema de combate
-    private bool isInCombat = false;
+    public CombatSystem combatSystem; // Referencia al sistema de combat
     private PlayerHealth playerHealth;
 
+    private UIManager uiManager;
     private void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Jugador tocó al enemigo: " + enemyName);
             combatSystem.StartCombat(this); // Inicia el combate con este enemigo
-            isInCombat = true;
+            
             StartCoroutine(AttackPlayer()); // Comienza a atacar al jugador
         }
     }
@@ -66,6 +66,10 @@ public class Enemy : MonoBehaviour
         
        
         combatSystem.EndCombat();
+        if (gameObject.CompareTag("Boss"))
+        {
+            WinCondition();
+        }
         Destroy(gameObject); //  Se destruye el enemigo después de terminar el combate
         Debug.Log(gameObject.name);
         
@@ -74,7 +78,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator AttackPlayer()
     {
         
-        while (isInCombat && playerHealth != null && !playerHealth.IsDead())
+        while (combatSystem.IsCombatActive() && playerHealth != null && !playerHealth.IsDead() )
         {
             Debug.Log($"condicion{attackInterval}");
             yield return new WaitForSeconds(attackInterval);
@@ -82,6 +86,12 @@ public class Enemy : MonoBehaviour
             playerHealth.TakeDamage(attackDamage);
 
         }
+    }
+
+    public void WinCondition()
+    {
+       uiManager.showWin();
+       Time.timeScale = 0f;
     }
 
 
