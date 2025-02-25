@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+
+
 public class UIManager : MonoBehaviour
 {
     public CombatSystem combatSystem;
@@ -12,8 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject GameOverPanel;
     public GameObject WinPanel;
 
-  
-
+    
     private void Start()
     {
         if(combatSystem != null) 
@@ -31,10 +31,15 @@ public class UIManager : MonoBehaviour
             hidePanel(); 
         }
 
-       combatSystem.SwitchToBasicUI(); 
+
+       combatSystem.SwitchToBasicUI();
+
+        
 
     }
 
+    
+ 
     private void Update()
     {
         //con esto oculto y muestro el inventario
@@ -50,6 +55,7 @@ public class UIManager : MonoBehaviour
    
     }
 
+    
 
     private void ShowPause()
     {

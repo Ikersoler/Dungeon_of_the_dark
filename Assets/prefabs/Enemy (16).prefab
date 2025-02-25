@@ -126,6 +126,9 @@ MonoBehaviour:
   attackDamage: 10
   attackInterval: 2
   combatSystem: {fileID: 0}
+  uiManager: {fileID: 0}
+  bloodEffectPrefab: {fileID: 4984523837238058178, guid: a79633dde866b8347bcb612433a2bee8,
+    type: 3}
 --- !u!54 &7722983578771858458
 Rigidbody:
   m_ObjectHideFlags: 0

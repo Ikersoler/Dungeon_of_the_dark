@@ -17,7 +17,11 @@ public class Enemy : MonoBehaviour
     public CombatSystem combatSystem; // Referencia al sistema de combat
     private PlayerHealth playerHealth;
 
-    private UIManager uiManager;
+    [SerializeField] private UIManager uiManager;
+
+    [Header("Death Effects")]
+    public GameObject bloodEffectPrefab;
+
     private void Start()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
@@ -61,7 +65,12 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        
+        if (bloodEffectPrefab != null)
+        {
+            Instantiate(bloodEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+
         Debug.Log(enemyName + " ha sido derrotado.");
         
        
